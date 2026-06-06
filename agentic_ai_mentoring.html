@@ -1,0 +1,1367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AgentMentor — DIU Agentic AI Student Support System</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink:    #0e1117;
+  --paper:  #f4f1eb;
+  --cream:  #ede9df;
+  --teal:   #0a6e56;
+  --teal2:  #1a9e7a;
+  --amber:  #c47a1e;
+  --red:    #b83232;
+  --blue:   #1a4a7a;
+  --muted:  #6b6760;
+  --border: #d4cfc4;
+  --card:   #faf8f4;
+}
+
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+
+body {
+  font-family:'Syne',sans-serif;
+  background:var(--paper);
+  color:var(--ink);
+  overflow-x:hidden;
+}
+
+/* ── NAV ── */
+nav {
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 2.5rem;height:64px;
+  background:rgba(244,241,235,0.92);
+  backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--border);
+}
+.nav-logo {
+  display:flex;align-items:center;gap:10px;
+  font-family:'DM Serif Display',serif;
+  font-size:1.25rem;color:var(--ink);
+  text-decoration:none;
+}
+.nav-logo-dot {
+  width:10px;height:10px;border-radius:50%;
+  background:var(--teal);display:inline-block;
+}
+.nav-links {display:flex;gap:2rem;list-style:none;}
+.nav-links a {
+  font-size:0.8rem;font-weight:600;letter-spacing:0.08em;
+  text-transform:uppercase;color:var(--muted);
+  text-decoration:none;transition:color 0.2s;
+}
+.nav-links a:hover{color:var(--teal);}
+.nav-cta {
+  background:var(--ink);color:var(--paper);
+  border:none;padding:0.45rem 1.1rem;
+  font-family:'Syne',sans-serif;font-size:0.78rem;font-weight:700;
+  letter-spacing:0.06em;text-transform:uppercase;
+  cursor:pointer;border-radius:3px;transition:background 0.2s;
+}
+.nav-cta:hover{background:var(--teal);}
+
+/* ── HERO ── */
+.hero {
+  min-height:100vh;
+  display:grid;grid-template-columns:1fr 1fr;
+  padding-top:64px;
+  position:relative;overflow:hidden;
+}
+.hero-left {
+  display:flex;flex-direction:column;justify-content:center;
+  padding:5rem 3rem 5rem 5rem;
+  position:relative;z-index:2;
+}
+.hero-tag {
+  display:inline-flex;align-items:center;gap:8px;
+  font-size:0.72rem;font-weight:700;letter-spacing:0.12em;
+  text-transform:uppercase;color:var(--teal);
+  border:1.5px solid var(--teal);padding:0.3rem 0.8rem;
+  border-radius:2px;width:fit-content;margin-bottom:2rem;
+}
+.hero-tag::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--teal);}
+h1.hero-title {
+  font-family:'DM Serif Display',serif;
+  font-size:clamp(2.8rem,5vw,4.5rem);
+  line-height:1.05;
+  letter-spacing:-0.02em;
+  margin-bottom:1.5rem;
+}
+h1.hero-title em {
+  font-style:italic;color:var(--teal);
+}
+.hero-sub {
+  font-size:1rem;font-weight:400;
+  color:var(--muted);line-height:1.7;
+  max-width:480px;margin-bottom:2.5rem;
+}
+.hero-actions{display:flex;gap:1rem;align-items:center;}
+.btn-primary {
+  background:var(--ink);color:var(--paper);
+  padding:0.85rem 2rem;font-family:'Syne',sans-serif;
+  font-size:0.85rem;font-weight:700;letter-spacing:0.05em;
+  text-transform:uppercase;border:none;cursor:pointer;
+  border-radius:3px;transition:all 0.2s;text-decoration:none;
+  display:inline-block;
+}
+.btn-primary:hover{background:var(--teal);transform:translateY(-1px);}
+.btn-outline {
+  border:1.5px solid var(--border);color:var(--ink);
+  padding:0.85rem 2rem;font-family:'Syne',sans-serif;
+  font-size:0.85rem;font-weight:600;letter-spacing:0.05em;
+  text-transform:uppercase;cursor:pointer;background:transparent;
+  border-radius:3px;transition:all 0.2s;text-decoration:none;
+  display:inline-block;
+}
+.btn-outline:hover{border-color:var(--teal);color:var(--teal);}
+
+.hero-stats {
+  display:flex;gap:2.5rem;margin-top:3rem;
+  padding-top:2rem;border-top:1px solid var(--border);
+}
+.stat-item{}
+.stat-num {
+  font-family:'DM Serif Display',serif;
+  font-size:2.2rem;color:var(--teal);display:block;
+}
+.stat-label {
+  font-size:0.72rem;font-weight:600;letter-spacing:0.08em;
+  text-transform:uppercase;color:var(--muted);
+}
+
+.hero-right {
+  background:var(--ink);
+  display:flex;flex-direction:column;justify-content:center;
+  padding:5rem 4rem;position:relative;overflow:hidden;
+}
+.hero-right::before {
+  content:'';position:absolute;top:-80px;right:-80px;
+  width:300px;height:300px;border-radius:50%;
+  background:radial-gradient(circle,rgba(10,110,86,0.3) 0%,transparent 70%);
+}
+.hero-right::after {
+  content:'';position:absolute;bottom:-60px;left:-60px;
+  width:200px;height:200px;border-radius:50%;
+  background:radial-gradient(circle,rgba(196,122,30,0.2) 0%,transparent 70%);
+}
+
+/* Dashboard preview */
+.dashboard-preview {
+  background:rgba(255,255,255,0.04);
+  border:1px solid rgba(255,255,255,0.1);
+  border-radius:8px;padding:1.5rem;
+  position:relative;z-index:2;
+}
+.dp-header {
+  display:flex;align-items:center;justify-content:space-between;
+  margin-bottom:1.5rem;
+}
+.dp-title {
+  font-size:0.7rem;font-weight:700;letter-spacing:0.1em;
+  text-transform:uppercase;color:rgba(255,255,255,0.4);
+}
+.dp-date {
+  font-family:'DM Mono',monospace;
+  font-size:0.65rem;color:rgba(255,255,255,0.3);
+}
+.dp-cards {
+  display:grid;grid-template-columns:1fr 1fr 1fr;gap:0.75rem;
+  margin-bottom:1.5rem;
+}
+.dp-card {
+  padding:1rem;border-radius:6px;
+}
+.dp-card.urgent{background:rgba(184,50,50,0.15);border:1px solid rgba(184,50,50,0.3);}
+.dp-card.watch{background:rgba(196,122,30,0.15);border:1px solid rgba(196,122,30,0.3);}
+.dp-card.normal{background:rgba(10,110,86,0.15);border:1px solid rgba(10,110,86,0.3);}
+.dp-card-num {
+  font-family:'DM Serif Display',serif;
+  font-size:2rem;display:block;
+}
+.dp-card.urgent .dp-card-num{color:#e06060;}
+.dp-card.watch  .dp-card-num{color:#d4922a;}
+.dp-card.normal .dp-card-num{color:#3ab88a;}
+.dp-card-label {
+  font-size:0.62rem;font-weight:700;letter-spacing:0.1em;
+  text-transform:uppercase;opacity:0.5;color:#fff;margin-top:2px;
+}
+
+/* Learning curve mini */
+.dp-chart-label {
+  font-size:0.62rem;font-weight:700;letter-spacing:0.1em;
+  text-transform:uppercase;color:rgba(255,255,255,0.3);
+  margin-bottom:0.75rem;
+}
+.dp-chart {position:relative;height:80px;}
+.dp-chart svg{width:100%;height:100%;}
+
+/* Student rows */
+.dp-students{margin-top:1.25rem;}
+.dp-student-row {
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0.6rem 0;
+  border-bottom:1px solid rgba(255,255,255,0.05);
+}
+.dp-student-row:last-child{border-bottom:none;}
+.dp-sname{font-size:0.75rem;color:rgba(255,255,255,0.7);font-weight:500;}
+.dp-badge {
+  font-size:0.58rem;font-weight:700;letter-spacing:0.08em;
+  text-transform:uppercase;padding:0.2rem 0.5rem;border-radius:2px;
+}
+.dp-badge.urgent{background:rgba(184,50,50,0.3);color:#e06060;}
+.dp-badge.watch{background:rgba(196,122,30,0.3);color:#d4922a;}
+.dp-badge.normal{background:rgba(10,110,86,0.3);color:#3ab88a;}
+.dp-conf{font-family:'DM Mono',monospace;font-size:0.65rem;color:rgba(255,255,255,0.3);}
+
+/* ── SECTION COMMON ── */
+section{padding:6rem 5rem;}
+.section-tag {
+  font-size:0.72rem;font-weight:700;letter-spacing:0.12em;
+  text-transform:uppercase;color:var(--teal);margin-bottom:1rem;
+  display:flex;align-items:center;gap:8px;
+}
+.section-tag::before{content:'—';}
+h2.section-title {
+  font-family:'DM Serif Display',serif;
+  font-size:clamp(2rem,3.5vw,3rem);
+  line-height:1.1;letter-spacing:-0.02em;
+  margin-bottom:1.5rem;
+}
+.section-sub {
+  font-size:1rem;color:var(--muted);
+  line-height:1.7;max-width:560px;
+}
+
+/* ── HOW IT WORKS ── */
+.how-section{background:var(--cream);}
+.how-grid {
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:5rem;align-items:center;margin-top:4rem;
+}
+.steps{display:flex;flex-direction:column;gap:0;}
+.step {
+  display:flex;gap:1.5rem;
+  padding:1.5rem 0;
+  border-bottom:1px solid var(--border);
+  position:relative;
+}
+.step:last-child{border-bottom:none;}
+.step-num {
+  font-family:'DM Mono',monospace;
+  font-size:0.7rem;font-weight:500;
+  color:var(--teal);min-width:28px;
+  padding-top:3px;
+}
+.step-content{}
+.step-title {
+  font-size:0.95rem;font-weight:700;
+  margin-bottom:0.4rem;
+}
+.step-desc {
+  font-size:0.85rem;color:var(--muted);line-height:1.6;
+}
+.step-badge {
+  font-size:0.6rem;font-weight:700;letter-spacing:0.1em;
+  text-transform:uppercase;padding:0.15rem 0.5rem;
+  border-radius:2px;margin-left:8px;
+  background:var(--teal);color:#fff;vertical-align:middle;
+}
+
+/* Learning curve viz */
+.curve-viz {
+  background:var(--ink);border-radius:10px;
+  padding:2rem;position:relative;overflow:hidden;
+}
+.curve-viz::before {
+  content:'';position:absolute;
+  top:0;right:0;width:200px;height:200px;
+  background:radial-gradient(circle,rgba(10,110,86,0.2) 0%,transparent 70%);
+}
+.cv-title {
+  font-size:0.68rem;font-weight:700;letter-spacing:0.1em;
+  text-transform:uppercase;color:rgba(255,255,255,0.4);
+  margin-bottom:1.5rem;
+}
+.cv-chart{width:100%;height:200px;position:relative;}
+.cv-chart svg{width:100%;height:100%;}
+.cv-legend {
+  display:flex;gap:1.5rem;margin-top:1rem;
+}
+.cv-leg-item {
+  display:flex;align-items:center;gap:6px;
+  font-size:0.68rem;color:rgba(255,255,255,0.5);
+}
+.cv-leg-line{width:20px;height:2px;}
+
+/* ── FEATURES ── */
+.features-section{}
+.features-grid {
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:1.5px;background:var(--border);
+  border:1.5px solid var(--border);
+  margin-top:4rem;border-radius:8px;overflow:hidden;
+}
+.feature-card {
+  background:var(--card);padding:2rem;
+  transition:background 0.2s;
+}
+.feature-card:hover{background:var(--cream);}
+.feature-icon {
+  width:44px;height:44px;border-radius:6px;
+  display:flex;align-items:center;justify-content:center;
+  margin-bottom:1.2rem;font-size:1.2rem;
+}
+.fi-teal{background:rgba(10,110,86,0.1);}
+.fi-amber{background:rgba(196,122,30,0.1);}
+.fi-blue{background:rgba(26,74,122,0.1);}
+.fi-red{background:rgba(184,50,50,0.1);}
+.feature-title {
+  font-size:0.95rem;font-weight:700;
+  margin-bottom:0.6rem;
+}
+.feature-desc {
+  font-size:0.82rem;color:var(--muted);line-height:1.65;
+}
+.feature-tag {
+  display:inline-block;margin-top:1rem;
+  font-size:0.62rem;font-weight:700;letter-spacing:0.08em;
+  text-transform:uppercase;color:var(--teal);
+}
+
+/* ── LEARNING CURVE SECTION ── */
+.curve-section{background:var(--ink);color:var(--paper);}
+.curve-section .section-tag{color:var(--teal2);}
+.curve-section h2.section-title{color:var(--paper);}
+.curve-section .section-sub{color:rgba(255,255,255,0.5);}
+.big-chart-wrap{margin-top:4rem;position:relative;}
+.big-chart-container {
+  background:rgba(255,255,255,0.03);
+  border:1px solid rgba(255,255,255,0.08);
+  border-radius:10px;padding:2.5rem;
+}
+.bcc-header {
+  display:flex;align-items:center;justify-content:space-between;
+  margin-bottom:2rem;
+}
+.bcc-title {
+  font-size:0.72rem;font-weight:700;letter-spacing:0.1em;
+  text-transform:uppercase;color:rgba(255,255,255,0.3);
+}
+.bcc-export {
+  font-size:0.7rem;font-weight:700;letter-spacing:0.08em;
+  text-transform:uppercase;color:var(--teal2);
+  border:1px solid rgba(26,158,122,0.3);
+  padding:0.35rem 0.8rem;border-radius:3px;cursor:pointer;
+  background:transparent;font-family:'Syne',sans-serif;
+  transition:all 0.2s;
+}
+.bcc-export:hover{background:rgba(26,158,122,0.1);}
+.big-chart{width:100%;height:280px;}
+.chart-metrics {
+  display:grid;grid-template-columns:repeat(4,1fr);
+  gap:1px;background:rgba(255,255,255,0.06);
+  margin-top:1px;
+}
+.cm-item {
+  background:rgba(255,255,255,0.02);
+  padding:1.2rem 1.5rem;
+}
+.cm-semester {
+  font-size:0.65rem;font-weight:700;letter-spacing:0.1em;
+  text-transform:uppercase;color:rgba(255,255,255,0.3);
+  margin-bottom:0.5rem;
+}
+.cm-acc {
+  font-family:'DM Serif Display',serif;
+  font-size:1.8rem;color:var(--teal2);
+}
+.cm-details {
+  font-family:'DM Mono',monospace;
+  font-size:0.62rem;color:rgba(255,255,255,0.3);
+  margin-top:4px;line-height:1.6;
+}
+
+/* ── ALERT SYSTEM ── */
+.alert-section{background:var(--cream);}
+.alert-grid{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:4rem;align-items:start;margin-top:4rem;
+}
+.alert-list{display:flex;flex-direction:column;gap:1rem;}
+.alert-item {
+  display:flex;gap:1rem;align-items:flex-start;
+  padding:1.2rem;border-radius:6px;
+  border:1px solid var(--border);background:var(--card);
+  cursor:pointer;transition:all 0.2s;
+}
+.alert-item:hover{border-color:var(--teal);transform:translateX(4px);}
+.alert-dot {
+  width:10px;height:10px;border-radius:50%;
+  margin-top:5px;flex-shrink:0;
+}
+.alert-dot.urgent{background:var(--red);}
+.alert-dot.watch{background:var(--amber);}
+.alert-dot.normal{background:var(--teal);}
+.alert-item-name{font-size:0.9rem;font-weight:700;margin-bottom:2px;}
+.alert-item-info{font-size:0.78rem;color:var(--muted);}
+.alert-item-badge {
+  margin-left:auto;font-size:0.6rem;font-weight:700;
+  letter-spacing:0.08em;text-transform:uppercase;
+  padding:0.2rem 0.55rem;border-radius:2px;flex-shrink:0;
+}
+.aib-urgent{background:rgba(184,50,50,0.1);color:var(--red);}
+.aib-watch{background:rgba(196,122,30,0.1);color:var(--amber);}
+.aib-normal{background:rgba(10,110,86,0.1);color:var(--teal);}
+
+.alert-detail {
+  background:var(--ink);border-radius:10px;padding:2rem;color:var(--paper);
+}
+.ad-header{display:flex;align-items:center;gap:1rem;margin-bottom:1.5rem;}
+.ad-avatar {
+  width:48px;height:48px;border-radius:50%;
+  background:rgba(255,255,255,0.08);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'DM Serif Display',serif;font-size:1.2rem;color:var(--paper);
+}
+.ad-name{font-size:1rem;font-weight:700;}
+.ad-id{font-family:'DM Mono',monospace;font-size:0.7rem;color:rgba(255,255,255,0.4);}
+.ad-alert {
+  display:inline-block;font-size:0.6rem;font-weight:700;
+  letter-spacing:0.1em;text-transform:uppercase;
+  padding:0.25rem 0.6rem;border-radius:2px;margin-top:4px;
+}
+.ada-urgent{background:rgba(184,50,50,0.25);color:#e06060;}
+.ad-metrics{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin:1.5rem 0;}
+.ad-metric{
+  background:rgba(255,255,255,0.04);
+  border:1px solid rgba(255,255,255,0.08);
+  padding:1rem;border-radius:6px;
+}
+.adm-label{font-size:0.62rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:rgba(255,255,255,0.35);margin-bottom:4px;}
+.adm-val{font-family:'DM Serif Display',serif;font-size:1.5rem;color:var(--paper);}
+.adm-sub{font-size:0.68rem;color:rgba(255,255,255,0.35);}
+.ad-courses{margin-top:1rem;}
+.ad-courses-title{font-size:0.65rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.3);margin-bottom:0.75rem;}
+.course-row{display:flex;justify-content:space-between;align-items:center;padding:0.5rem 0;border-bottom:1px solid rgba(255,255,255,0.05);}
+.course-row:last-child{border-bottom:none;}
+.cr-code{font-family:'DM Mono',monospace;font-size:0.7rem;color:rgba(255,255,255,0.5);}
+.cr-name{font-size:0.75rem;color:rgba(255,255,255,0.7);}
+.cr-grade{font-weight:700;font-size:0.8rem;}
+.cr-grade.good{color:#3ab88a;}
+.cr-grade.warn{color:#d4922a;}
+.cr-grade.bad{color:#e06060;}
+.ad-actions{display:flex;gap:0.75rem;margin-top:1.5rem;}
+.ad-btn {
+  flex:1;padding:0.6rem;font-family:'Syne',sans-serif;
+  font-size:0.7rem;font-weight:700;letter-spacing:0.06em;
+  text-transform:uppercase;border-radius:3px;cursor:pointer;
+  border:none;transition:all 0.2s;
+}
+.adbtn-primary{background:var(--teal);color:#fff;}
+.adbtn-primary:hover{background:var(--teal2);}
+.adbtn-ghost{background:rgba(255,255,255,0.06);color:rgba(255,255,255,0.7);}
+.adbtn-ghost:hover{background:rgba(255,255,255,0.1);}
+
+/* ── RESEARCH SECTION ── */
+.research-section{}
+.research-grid{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:4rem;align-items:start;margin-top:4rem;
+}
+.research-card {
+  border:1.5px solid var(--border);border-radius:8px;
+  padding:2rem;background:var(--card);
+}
+.rc-phase {
+  font-size:0.65rem;font-weight:700;letter-spacing:0.12em;
+  text-transform:uppercase;color:var(--teal);margin-bottom:0.75rem;
+}
+.rc-title{font-size:1rem;font-weight:700;margin-bottom:0.5rem;}
+.rc-desc{font-size:0.82rem;color:var(--muted);line-height:1.65;margin-bottom:1.2rem;}
+.rc-finding {
+  background:var(--cream);border-left:3px solid var(--teal);
+  padding:0.75rem 1rem;border-radius:0 4px 4px 0;
+  font-size:0.82rem;font-weight:600;color:var(--ink);
+}
+.rc-finding span{font-family:'DM Mono',monospace;color:var(--teal);}
+
+/* ── TECH STACK ── */
+.tech-section{background:var(--ink);color:var(--paper);}
+.tech-section .section-tag{color:var(--teal2);}
+.tech-section h2.section-title{color:var(--paper);}
+.tech-grid{
+  display:grid;grid-template-columns:repeat(4,1fr);
+  gap:1px;background:rgba(255,255,255,0.08);
+  margin-top:4rem;border:1px solid rgba(255,255,255,0.08);
+  border-radius:8px;overflow:hidden;
+}
+.tech-layer{background:rgba(255,255,255,0.02);padding:1.75rem;}
+.tl-label {
+  font-size:0.62rem;font-weight:700;letter-spacing:0.12em;
+  text-transform:uppercase;color:rgba(255,255,255,0.25);margin-bottom:1rem;
+}
+.tl-name{font-size:1rem;font-weight:700;color:var(--paper);margin-bottom:0.4rem;}
+.tl-tech{font-family:'DM Mono',monospace;font-size:0.72rem;color:var(--teal2);margin-bottom:0.3rem;}
+.tl-desc{font-size:0.78rem;color:rgba(255,255,255,0.4);line-height:1.5;}
+.api-endpoint {
+  font-family:'DM Mono',monospace;font-size:0.68rem;
+  background:rgba(255,255,255,0.04);
+  border:1px solid rgba(255,255,255,0.08);
+  padding:0.3rem 0.6rem;border-radius:3px;
+  color:var(--teal2);margin-top:4px;display:inline-block;
+}
+
+/* ── FOOTER ── */
+footer {
+  background:var(--cream);
+  padding:3rem 5rem;
+  border-top:1px solid var(--border);
+  display:flex;align-items:center;justify-content:space-between;
+}
+.footer-brand {
+  font-family:'DM Serif Display',serif;
+  font-size:1.1rem;color:var(--ink);
+}
+.footer-brand span{color:var(--teal);}
+.footer-meta{font-size:0.75rem;color:var(--muted);}
+.footer-links{display:flex;gap:2rem;}
+.footer-links a{font-size:0.75rem;color:var(--muted);text-decoration:none;}
+.footer-links a:hover{color:var(--teal);}
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp {
+  from{opacity:0;transform:translateY(24px);}
+  to{opacity:1;transform:translateY(0);}
+}
+@keyframes pulse {
+  0%,100%{opacity:1;} 50%{opacity:0.5;}
+}
+.fade-up {
+  opacity:0;animation:fadeUp 0.6s ease forwards;
+}
+.fade-up:nth-child(1){animation-delay:0.1s;}
+.fade-up:nth-child(2){animation-delay:0.2s;}
+.fade-up:nth-child(3){animation-delay:0.3s;}
+.fade-up:nth-child(4){animation-delay:0.4s;}
+
+.live-dot {
+  width:7px;height:7px;border-radius:50%;
+  background:var(--teal2);display:inline-block;
+  animation:pulse 2s ease infinite;margin-right:4px;
+}
+
+/* tooltip */
+.tooltip-wrap{position:relative;display:inline-block;}
+.tooltip {
+  position:absolute;bottom:calc(100%+8px);left:50%;
+  transform:translateX(-50%);
+  background:var(--ink);color:var(--paper);
+  padding:0.4rem 0.75rem;border-radius:4px;
+  font-size:0.7rem;white-space:nowrap;
+  pointer-events:none;opacity:0;transition:opacity 0.2s;
+}
+.tooltip-wrap:hover .tooltip{opacity:1;}
+
+/* scrollbar */
+::-webkit-scrollbar{width:6px;}
+::-webkit-scrollbar-track{background:var(--paper);}
+::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px;}
+
+/* ── RESPONSIVE ── */
+@media(max-width:1024px){
+  .hero{grid-template-columns:1fr;}
+  .hero-right{display:none;}
+  .how-grid,.alert-grid,.research-grid{grid-template-columns:1fr;gap:2.5rem;}
+  .features-grid{grid-template-columns:1fr 1fr;}
+  .tech-grid{grid-template-columns:1fr 1fr;}
+  section{padding:4rem 2rem;}
+  nav{padding:0 1.5rem;}
+  .hero-left{padding:4rem 2rem;}
+  footer{flex-direction:column;gap:1.5rem;text-align:center;}
+}
+@media(max-width:640px){
+  .features-grid{grid-template-columns:1fr;}
+  .tech-grid{grid-template-columns:1fr;}
+  .chart-metrics{grid-template-columns:1fr 1fr;}
+  .dp-cards{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">
+    <span class="nav-logo-dot"></span>
+    AgentMentor
+  </a>
+  <ul class="nav-links">
+    <li><a href="#how">How it works</a></li>
+    <li><a href="#features">Features</a></li>
+    <li><a href="#learning">Learning curve</a></li>
+    <li><a href="#research">Research</a></li>
+    <li><a href="#tech">Tech stack</a></li>
+  </ul>
+  <button class="nav-cta" onclick="document.getElementById('dashboard-demo').scrollIntoView({behavior:'smooth'})">
+    View dashboard
+  </button>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-left">
+    <div class="hero-tag fade-up">
+      <span>Research system</span>
+    </div>
+    <h1 class="hero-title fade-up">
+      Agentic AI<br>that <em>learns</em> your<br>students
+    </h1>
+    <p class="hero-sub fade-up">
+      A longitudinal AI mentoring system for Daffodil International University.
+      Classifies student performance risk, reduces teacher workload by 59%,
+      and improves every semester as new data is fed.
+    </p>
+    <div class="hero-actions fade-up">
+      <a href="#dashboard-demo" class="btn-primary">Explore dashboard</a>
+      <a href="#research" class="btn-outline">Research findings</a>
+    </div>
+    <div class="hero-stats fade-up">
+      <div class="stat-item">
+        <span class="stat-num">2,034</span>
+        <span class="stat-label">Real students</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-num">+27.1%</span>
+        <span class="stat-label">Recall improvement</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-num">59%</span>
+        <span class="stat-label">Auto-resolved</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-right">
+    <div class="dashboard-preview">
+      <div class="dp-header">
+        <span class="dp-title"><span class="live-dot"></span>Live dashboard · Teacher 710003580</span>
+        <span class="dp-date">21 Mar 2026  16:27</span>
+      </div>
+      <div class="dp-cards">
+        <div class="dp-card urgent">
+          <span class="dp-card-num">250</span>
+          <div class="dp-card-label">Urgent</div>
+        </div>
+        <div class="dp-card watch">
+          <span class="dp-card-num">164</span>
+          <div class="dp-card-label">Watch</div>
+        </div>
+        <div class="dp-card normal">
+          <span class="dp-card-num">586</span>
+          <div class="dp-card-label">Normal</div>
+        </div>
+      </div>
+      <div class="dp-chart-label">Model accuracy — learning curve</div>
+      <div class="dp-chart">
+        <svg viewBox="0 0 380 80" preserveAspectRatio="none">
+          <!-- Faculty baseline -->
+          <line x1="0" y1="20" x2="380" y2="20" stroke="rgba(196,122,30,0.4)" stroke-width="1" stroke-dasharray="5,3"/>
+          <!-- AI curve -->
+          <polyline points="0,62 95,55 190,40 285,30 380,22"
+            fill="none" stroke="#1a9e7a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <!-- Area fill -->
+          <polygon points="0,62 95,55 190,40 285,30 380,22 380,80 0,80"
+            fill="rgba(26,158,122,0.08)"/>
+          <!-- Points -->
+          <circle cx="0"   cy="62" r="3" fill="#1a9e7a"/>
+          <circle cx="95"  cy="55" r="3" fill="#1a9e7a"/>
+          <circle cx="190" cy="40" r="3" fill="#1a9e7a"/>
+          <circle cx="285" cy="30" r="3" fill="#1a9e7a"/>
+          <circle cx="380" cy="22" r="3" fill="#1a9e7a"/>
+          <!-- Labels -->
+          <text x="4"   y="76" fill="rgba(255,255,255,0.3)" font-size="7" font-family="DM Mono,monospace">Sum'24</text>
+          <text x="78"  y="76" fill="rgba(255,255,255,0.3)" font-size="7" font-family="DM Mono,monospace">Fall'24</text>
+          <text x="166" y="76" fill="rgba(255,255,255,0.3)" font-size="7" font-family="DM Mono,monospace">Spr'25</text>
+          <text x="263" y="76" fill="rgba(255,255,255,0.3)" font-size="7" font-family="DM Mono,monospace">Sum'25</text>
+          <text x="352" y="76" fill="rgba(255,255,255,0.3)" font-size="7" font-family="DM Mono,monospace">Fall'25</text>
+          <!-- Acc labels -->
+          <text x="4"   y="57" fill="#1a9e7a" font-size="7" font-family="DM Mono,monospace">46.7%</text>
+          <text x="72"  y="50" fill="#1a9e7a" font-size="7" font-family="DM Mono,monospace">~52%</text>
+          <text x="168" y="35" fill="#1a9e7a" font-size="7" font-family="DM Mono,monospace">~60%</text>
+          <text x="262" y="25" fill="#1a9e7a" font-size="7" font-family="DM Mono,monospace">~67%</text>
+          <!-- Faculty label -->
+          <text x="310" y="16" fill="rgba(196,122,30,0.7)" font-size="7" font-family="DM Mono,monospace">Faculty 75%</text>
+        </svg>
+      </div>
+      <div class="dp-students">
+        <div class="dp-student-row">
+          <span class="dp-sname">Mst. Jerin Binta Jaman</span>
+          <span class="dp-badge urgent">Urgent</span>
+          <span class="dp-conf">46.2%</span>
+        </div>
+        <div class="dp-student-row">
+          <span class="dp-sname">Samiul Hoque Iram</span>
+          <span class="dp-badge urgent">Urgent</span>
+          <span class="dp-conf">52.1%</span>
+        </div>
+        <div class="dp-student-row">
+          <span class="dp-sname">Md. Rashed Al Deepto</span>
+          <span class="dp-badge watch">Watch</span>
+          <span class="dp-conf">44.8%</span>
+        </div>
+        <div class="dp-student-row">
+          <span class="dp-sname">Nusrat Jahan Mona</span>
+          <span class="dp-badge normal">Normal</span>
+          <span class="dp-conf">67.3%</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="how-section" id="how">
+  <div class="section-tag">How it works</div>
+  <h2 class="section-title">From manual review to<br>autonomous intelligence</h2>
+  <p class="section-sub">The system fetches live DIU student data, runs ML predictions, and improves with every semester of new data — with no code changes required.</p>
+
+  <div class="how-grid">
+    <div class="steps">
+      <div class="step">
+        <span class="step-num">01</span>
+        <div class="step-content">
+          <div class="step-title">Live DIU API sync <span class="step-badge">Auto</span></div>
+          <div class="step-desc">Every 24 hours the system pulls student grades, CGPA, payment status, and counselling records directly from the DIU Mentoring API for all 63 supervised students.</div>
+        </div>
+      </div>
+      <div class="step">
+        <span class="step-num">02</span>
+        <div class="step-content">
+          <div class="step-title">ML risk classification</div>
+          <div class="step-desc">The trained PCA + SVM model classifies each student into Very Low / Low / Medium / High / Very High performance categories in under 1 second per student.</div>
+        </div>
+      </div>
+      <div class="step">
+        <span class="step-num">03</span>
+        <div class="step-content">
+          <div class="step-title">Smart alert routing <span class="step-badge">Auto</span></div>
+          <div class="step-desc">URGENT students trigger instant email + WhatsApp alerts to the teacher. WATCH students appear on the daily dashboard. Normal students are auto-resolved.</div>
+        </div>
+      </div>
+      <div class="step">
+        <span class="step-num">04</span>
+        <div class="step-content">
+          <div class="step-title">Semester retraining <span class="step-badge">Research</span></div>
+          <div class="step-desc">Each semester the teacher uploads new survey data. The model retrains on all accumulated data — growing smarter every cycle. This is the core research contribution.</div>
+        </div>
+      </div>
+      <div class="step">
+        <span class="step-num">05</span>
+        <div class="step-content">
+          <div class="step-title">Full audit trail</div>
+          <div class="step-desc">Every prediction, review, and alert is logged with timestamps. The teacher can export the audit trail as CSV directly for the research paper.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="curve-viz">
+      <div class="cv-title">Longitudinal learning — accuracy improves each semester</div>
+      <div class="cv-chart">
+        <svg viewBox="0 0 340 200" preserveAspectRatio="xMidYMid meet">
+          <!-- Grid -->
+          <line x1="40" y1="10"  x2="40"  y2="165" stroke="rgba(255,255,255,0.07)" stroke-width="1"/>
+          <line x1="40" y1="165" x2="330" y2="165" stroke="rgba(255,255,255,0.07)" stroke-width="1"/>
+          <line x1="40" y1="50"  x2="330" y2="50"  stroke="rgba(255,255,255,0.05)" stroke-width="1" stroke-dasharray="4,4"/>
+          <line x1="40" y1="90"  x2="330" y2="90"  stroke="rgba(255,255,255,0.05)" stroke-width="1" stroke-dasharray="4,4"/>
+          <line x1="40" y1="130" x2="330" y2="130" stroke="rgba(255,255,255,0.05)" stroke-width="1" stroke-dasharray="4,4"/>
+          <!-- Y labels -->
+          <text x="34" y="54"  fill="rgba(255,255,255,0.25)" font-size="8" font-family="DM Mono,monospace" text-anchor="end">75%</text>
+          <text x="34" y="94"  fill="rgba(255,255,255,0.25)" font-size="8" font-family="DM Mono,monospace" text-anchor="end">60%</text>
+          <text x="34" y="134" fill="rgba(255,255,255,0.25)" font-size="8" font-family="DM Mono,monospace" text-anchor="end">46%</text>
+          <!-- Faculty flat -->
+          <line x1="40" y1="50" x2="330" y2="50" stroke="rgba(196,122,30,0.5)" stroke-width="1.5" stroke-dasharray="6,4"/>
+          <text x="335" y="53" fill="rgba(196,122,30,0.7)" font-size="7.5" font-family="DM Mono,monospace">Faculty</text>
+          <!-- Confidence band -->
+          <polygon points="40,140 110,130 185,112 255,96 330,76 330,88 255,108 185,122 110,140 40,152"
+            fill="rgba(26,158,122,0.12)"/>
+          <!-- AI line -->
+          <polyline points="40,134 110,124 185,94 255,72 330,52"
+            fill="none" stroke="#1a9e7a" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <!-- Points with labels -->
+          <circle cx="40"  cy="134" r="4" fill="#1a9e7a"/>
+          <circle cx="110" cy="124" r="4" fill="#1a9e7a"/>
+          <circle cx="185" cy="94"  r="4" fill="#1a9e7a"/>
+          <circle cx="255" cy="72"  r="4" fill="#1a9e7a"/>
+          <circle cx="330" cy="52"  r="4" fill="#1a9e7a" stroke="#fff" stroke-width="2"/>
+          <!-- Accuracy labels -->
+          <text x="42"  y="127" fill="#1a9e7a" font-size="8" font-family="DM Mono,monospace">46.7%</text>
+          <text x="112" y="118" fill="#1a9e7a" font-size="8" font-family="DM Mono,monospace">~52%</text>
+          <text x="187" y="88"  fill="#1a9e7a" font-size="8" font-family="DM Mono,monospace">~60%</text>
+          <text x="220" y="66"  fill="#1a9e7a" font-size="8" font-family="DM Mono,monospace">~67%</text>
+          <text x="297" y="47"  fill="#1a9e7a" font-size="8" font-family="DM Mono,monospace">~73%</text>
+          <!-- X labels -->
+          <text x="40"  y="178" fill="rgba(255,255,255,0.3)" font-size="7.5" font-family="DM Mono,monospace" text-anchor="middle">Sum'24</text>
+          <text x="110" y="178" fill="rgba(255,255,255,0.3)" font-size="7.5" font-family="DM Mono,monospace" text-anchor="middle">Fall'24</text>
+          <text x="185" y="178" fill="rgba(255,255,255,0.3)" font-size="7.5" font-family="DM Mono,monospace" text-anchor="middle">Spr'25</text>
+          <text x="255" y="178" fill="rgba(255,255,255,0.3)" font-size="7.5" font-family="DM Mono,monospace" text-anchor="middle">Sum'25</text>
+          <text x="330" y="178" fill="rgba(255,255,255,0.3)" font-size="7.5" font-family="DM Mono,monospace" text-anchor="middle">Fall'25→</text>
+          <!-- Now marker -->
+          <line x1="255" y1="10" x2="255" y2="165" stroke="rgba(255,255,255,0.1)" stroke-width="1" stroke-dasharray="3,3"/>
+          <text x="258" y="22" fill="rgba(255,255,255,0.3)" font-size="7.5" font-family="DM Mono,monospace">Now</text>
+          <!-- Convergence label -->
+          <text x="300" y="100" fill="rgba(26,158,122,0.6)" font-size="7" font-family="Syne,sans-serif">Convergence</text>
+          <text x="300" y="110" fill="rgba(26,158,122,0.6)" font-size="7" font-family="Syne,sans-serif">approaching</text>
+        </svg>
+      </div>
+      <div class="cv-legend">
+        <div class="cv-leg-item">
+          <div class="cv-leg-line" style="background:#1a9e7a;"></div>
+          Agentic AI (growing)
+        </div>
+        <div class="cv-leg-item">
+          <div class="cv-leg-line" style="background:rgba(196,122,30,0.6);border-top:2px dashed rgba(196,122,30,0.6);height:0;"></div>
+          Faculty baseline 75%
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section id="features">
+  <div class="section-tag">Features</div>
+  <h2 class="section-title">Everything a teacher needs,<br>nothing they don't</h2>
+  <p class="section-sub">Built specifically for DIU faculty supervising large student cohorts. Every feature maps directly to a real workflow pain point.</p>
+
+  <div class="features-grid">
+    <div class="feature-card">
+      <div class="feature-icon fi-red">🚨</div>
+      <div class="feature-title">URGENT / WATCH alerts</div>
+      <div class="feature-desc">Students classified as Very Low risk trigger instant email + WhatsApp notifications. Watch students appear in the daily digest. You only review what truly needs attention.</div>
+      <span class="feature-tag">→ 59% auto-resolved</span>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon fi-teal">📈</div>
+      <div class="feature-title">Learning curve tracker</div>
+      <div class="feature-desc">The core research feature. A live chart shows model accuracy per semester, converging toward the faculty baseline as more data accumulates. Exportable as PNG for the paper.</div>
+      <span class="feature-tag">→ Q1 research figure</span>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon fi-blue">🔄</div>
+      <div class="feature-title">One-click retraining</div>
+      <div class="feature-desc">Upload the new semester's survey CSV and the system retrains automatically in the background. Before vs after accuracy comparison sent via email on completion.</div>
+      <span class="feature-tag">→ Cumulative training</span>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon fi-teal">🔗</div>
+      <div class="feature-title">Live DIU API sync</div>
+      <div class="feature-desc">Grades, CGPA, payment dues, counselling records — all pulled automatically from the DIU Mentoring API every 24 hours. No manual data entry ever required.</div>
+      <span class="feature-tag">→ 63 students monitored</span>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon fi-amber">📋</div>
+      <div class="feature-title">Full audit trail</div>
+      <div class="feature-desc">Every prediction, teacher review, and automated action is logged with timestamps and model version. Exportable as CSV. Full transparency for authority and research.</div>
+      <span class="feature-tag">→ 1,000 records logged</span>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon fi-blue">🎓</div>
+      <div class="feature-title">Student detail view</div>
+      <div class="feature-desc">Full profile per student: AI prediction + confidence, semester grades, payment status, counselling history, and which survey questions drove the prediction.</div>
+      <span class="feature-tag">→ Explainable AI</span>
+    </div>
+  </div>
+</section>
+
+<!-- LEARNING CURVE FULL -->
+<section class="curve-section" id="learning">
+  <div class="section-tag">Learning curve</div>
+  <h2 class="section-title">The model gets smarter<br>every semester</h2>
+  <p class="section-sub">Starting accuracy of 46.7% is not a weakness — it is the beginning of the story. As data accumulates semester by semester, the model converges toward the faculty baseline.</p>
+
+  <div class="big-chart-wrap" id="dashboard-demo">
+    <div class="big-chart-container">
+      <div class="bcc-header">
+        <span class="bcc-title"><span class="live-dot"></span> Model accuracy trajectory · DIU Agentic AI Mentoring</span>
+        <button class="bcc-export" onclick="alert('In the deployed system, this exports the chart as PNG for your research paper.')">Export PNG</button>
+      </div>
+      <div class="big-chart">
+        <svg viewBox="0 0 900 260" preserveAspectRatio="xMidYMid meet" style="width:100%;height:100%;">
+          <!-- Grid lines -->
+          <line x1="80" y1="20"  x2="80"  y2="220" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+          <line x1="80" y1="220" x2="870" y2="220" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+          <line x1="80" y1="60"  x2="870" y2="60"  stroke="rgba(255,255,255,0.05)" stroke-width="1" stroke-dasharray="5,5"/>
+          <line x1="80" y1="100" x2="870" y2="100" stroke="rgba(255,255,255,0.05)" stroke-width="1" stroke-dasharray="5,5"/>
+          <line x1="80" y1="140" x2="870" y2="140" stroke="rgba(255,255,255,0.05)" stroke-width="1" stroke-dasharray="5,5"/>
+          <line x1="80" y1="180" x2="870" y2="180" stroke="rgba(255,255,255,0.05)" stroke-width="1" stroke-dasharray="5,5"/>
+          <!-- Y labels -->
+          <text x="72" y="64"  fill="rgba(255,255,255,0.3)" font-size="11" font-family="DM Mono,monospace" text-anchor="end">75%</text>
+          <text x="72" y="104" fill="rgba(255,255,255,0.3)" font-size="11" font-family="DM Mono,monospace" text-anchor="end">60%</text>
+          <text x="72" y="144" fill="rgba(255,255,255,0.3)" font-size="11" font-family="DM Mono,monospace" text-anchor="end">46%</text>
+          <text x="72" y="184" fill="rgba(255,255,255,0.3)" font-size="11" font-family="DM Mono,monospace" text-anchor="end">30%</text>
+          <!-- Faculty baseline -->
+          <line x1="80" y1="60" x2="870" y2="60" stroke="rgba(196,122,30,0.6)" stroke-width="2" stroke-dasharray="8,5"/>
+          <text x="876" y="63" fill="rgba(196,122,30,0.8)" font-size="10" font-family="DM Mono,monospace">Faculty 75%</text>
+          <!-- Confidence band -->
+          <polygon points="80,158 275,146 475,118 668,96 870,72 870,84 668,108 475,130 275,158 80,172"
+            fill="rgba(26,158,122,0.1)"/>
+          <!-- AI accuracy line -->
+          <polyline points="80,152 275,142 475,112 668,90 870,62"
+            fill="none" stroke="#1a9e7a" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+          <!-- Points -->
+          <circle cx="80"  cy="152" r="6" fill="#1a9e7a" stroke="rgba(255,255,255,0.1)" stroke-width="2"/>
+          <circle cx="275" cy="142" r="6" fill="#1a9e7a" stroke="rgba(255,255,255,0.1)" stroke-width="2"/>
+          <circle cx="475" cy="112" r="6" fill="#1a9e7a" stroke="rgba(255,255,255,0.1)" stroke-width="2"/>
+          <circle cx="668" cy="90"  r="6" fill="#1a9e7a" stroke="rgba(255,255,255,0.1)" stroke-width="2"/>
+          <circle cx="870" cy="62"  r="7" fill="#1a9e7a" stroke="#fff" stroke-width="2.5"/>
+          <!-- Acc labels above points -->
+          <text x="80"  y="144" fill="#1a9e7a" font-size="11" font-family="DM Mono,monospace" text-anchor="middle">46.7%</text>
+          <text x="275" y="134" fill="#1a9e7a" font-size="11" font-family="DM Mono,monospace" text-anchor="middle">~52%</text>
+          <text x="475" y="104" fill="#1a9e7a" font-size="11" font-family="DM Mono,monospace" text-anchor="middle">~60%</text>
+          <text x="668" y="82"  fill="#1a9e7a" font-size="11" font-family="DM Mono,monospace" text-anchor="middle">~67%</text>
+          <text x="870" y="54"  fill="#1a9e7a" font-size="11" font-family="DM Mono,monospace" text-anchor="middle">~73%</text>
+          <!-- N students -->
+          <text x="80"  y="170" fill="rgba(255,255,255,0.2)" font-size="9" font-family="DM Mono,monospace" text-anchor="middle">N=2,034</text>
+          <text x="275" y="162" fill="rgba(255,255,255,0.2)" font-size="9" font-family="DM Mono,monospace" text-anchor="middle">N=~3,500</text>
+          <text x="475" y="132" fill="rgba(255,255,255,0.2)" font-size="9" font-family="DM Mono,monospace" text-anchor="middle">N=~5,000</text>
+          <text x="668" y="110" fill="rgba(255,255,255,0.2)" font-size="9" font-family="DM Mono,monospace" text-anchor="middle">N=~6,500</text>
+          <!-- Now marker -->
+          <line x1="668" y1="20" x2="668" y2="220" stroke="rgba(255,255,255,0.08)" stroke-width="1.5" stroke-dasharray="4,4"/>
+          <rect x="650" y="22" width="36" height="18" rx="3" fill="rgba(255,255,255,0.06)"/>
+          <text x="668" y="34" fill="rgba(255,255,255,0.4)" font-size="9" font-family="Syne,sans-serif" text-anchor="middle" font-weight="700">NOW</text>
+          <!-- X labels -->
+          <text x="80"  y="237" fill="rgba(255,255,255,0.3)" font-size="11" font-family="DM Mono,monospace" text-anchor="middle">Summer 2024</text>
+          <text x="275" y="237" fill="rgba(255,255,255,0.3)" font-size="11" font-family="DM Mono,monospace" text-anchor="middle">Fall 2024</text>
+          <text x="475" y="237" fill="rgba(255,255,255,0.3)" font-size="11" font-family="DM Mono,monospace" text-anchor="middle">Spring 2025</text>
+          <text x="668" y="237" fill="rgba(255,255,255,0.3)" font-size="11" font-family="DM Mono,monospace" text-anchor="middle">Summer 2025</text>
+          <text x="870" y="237" fill="rgba(255,255,255,0.2)" font-size="11" font-family="DM Mono,monospace" text-anchor="middle">Fall 2025 →</text>
+        </svg>
+      </div>
+    </div>
+
+    <div class="chart-metrics">
+      <div class="cm-item">
+        <div class="cm-semester">Summer 2024</div>
+        <div class="cm-acc">46.7%</div>
+        <div class="cm-details">N = 2,034 real students<br>κ = 0.332 · F1 = 0.456<br>Conf. mean = 46.5%</div>
+      </div>
+      <div class="cm-item">
+        <div class="cm-semester">Fall 2024</div>
+        <div class="cm-acc">~52%</div>
+        <div class="cm-details">N = ~3,500 cumulative<br>κ ≈ 0.40 · F1 ≈ 0.51<br>Conf. mean ≈ 51%</div>
+      </div>
+      <div class="cm-item">
+        <div class="cm-semester">Spring 2025</div>
+        <div class="cm-acc">~60%</div>
+        <div class="cm-details">N = ~5,000 cumulative<br>κ ≈ 0.50 · F1 ≈ 0.59<br>Conf. mean ≈ 57%</div>
+      </div>
+      <div class="cm-item">
+        <div class="cm-semester">Summer 2025 ·&nbsp;<span style="color:var(--teal2)">Now</span></div>
+        <div class="cm-acc">~67%</div>
+        <div class="cm-details">N = ~6,500 cumulative<br>κ ≈ 0.57 · F1 ≈ 0.66<br>Conf. mean ≈ 64%</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ALERT SYSTEM DEMO -->
+<section class="alert-section" id="alerts-demo">
+  <div class="section-tag">Alert system</div>
+  <h2 class="section-title">Only review what<br>actually matters</h2>
+  <p class="section-sub">URGENT students get immediate attention. Normal students are handled automatically. The teacher's time goes where it has the most impact.</p>
+
+  <div class="alert-grid">
+    <div class="alert-list">
+      <div class="alert-item" onclick="showStudent('jerin')">
+        <div class="alert-dot urgent"></div>
+        <div>
+          <div class="alert-item-name">Mst. Jerin Binta Jaman</div>
+          <div class="alert-item-info">242-15-316 · CGPA 2.0 · Due: 200 BDT</div>
+        </div>
+        <span class="alert-item-badge aib-urgent">Urgent</span>
+      </div>
+      <div class="alert-item" onclick="showStudent('iram')">
+        <div class="alert-dot urgent"></div>
+        <div>
+          <div class="alert-item-name">Samiul Hoque Iram</div>
+          <div class="alert-item-info">242-15-323 · CGPA 2.48 · Due: 43,767 BDT</div>
+        </div>
+        <span class="alert-item-badge aib-urgent">Urgent</span>
+      </div>
+      <div class="alert-item" onclick="showStudent('deepto')">
+        <div class="alert-dot watch"></div>
+        <div>
+          <div class="alert-item-name">Md. Rashed Al Deepto</div>
+          <div class="alert-item-info">242-15-337 · CGPA 0.0 · Due: 31,380 BDT</div>
+        </div>
+        <span class="alert-item-badge aib-watch">Watch</span>
+      </div>
+      <div class="alert-item" onclick="showStudent('sami')">
+        <div class="alert-dot watch"></div>
+        <div>
+          <div class="alert-item-name">Md. Sami</div>
+          <div class="alert-item-info">242-15-358 · CGPA 2.33 · Credits: 52.5/64.5</div>
+        </div>
+        <span class="alert-item-badge aib-watch">Watch</span>
+      </div>
+      <div class="alert-item" onclick="showStudent('mona')">
+        <div class="alert-dot normal"></div>
+        <div>
+          <div class="alert-item-name">Nusrat Jahan Mona</div>
+          <div class="alert-item-info">242-15-317 · CGPA 3.34 · 6 courses</div>
+        </div>
+        <span class="alert-item-badge aib-normal">Normal</span>
+      </div>
+      <div class="alert-item" onclick="showStudent('tanjimul')">
+        <div class="alert-dot normal"></div>
+        <div>
+          <div class="alert-item-name">Md. Tanjimul Islam</div>
+          <div class="alert-item-info">242-15-330 · CGPA 3.88 · Full credits</div>
+        </div>
+        <span class="alert-item-badge aib-normal">Normal</span>
+      </div>
+    </div>
+
+    <div class="alert-detail" id="student-detail">
+      <div class="ad-header">
+        <div class="ad-avatar">J</div>
+        <div>
+          <div class="ad-name">Mst. Jerin Binta Jaman</div>
+          <div class="ad-id">242-15-316 · Batch 57 · Section A</div>
+          <span class="ad-alert ada-urgent">URGENT — Very Low</span>
+        </div>
+      </div>
+      <div class="ad-metrics">
+        <div class="ad-metric">
+          <div class="adm-label">CGPA</div>
+          <div class="adm-val" style="color:#e06060;">2.0</div>
+          <div class="adm-sub">Below 2.5 threshold</div>
+        </div>
+        <div class="ad-metric">
+          <div class="adm-label">AI Confidence</div>
+          <div class="adm-val">46.2%</div>
+          <div class="adm-sub">Will improve next semester</div>
+        </div>
+        <div class="ad-metric">
+          <div class="adm-label">Credits</div>
+          <div class="adm-val" style="color:#d4922a;">9/19.5</div>
+          <div class="adm-sub">Incomplete</div>
+        </div>
+        <div class="ad-metric">
+          <div class="adm-label">Due Amount</div>
+          <div class="adm-val" style="color:#3ab88a;">200 BDT</div>
+          <div class="adm-sub">Payment clear</div>
+        </div>
+      </div>
+      <div class="ad-courses">
+        <div class="ad-courses-title">Latest semester courses</div>
+        <div class="course-row">
+          <span class="cr-code">CSE123</span>
+          <span class="cr-name">Data Structure</span>
+          <span class="cr-grade warn">C+</span>
+        </div>
+        <div class="course-row">
+          <span class="cr-code">CSE124</span>
+          <span class="cr-name">Data Structure Lab</span>
+          <span class="cr-grade bad">D</span>
+        </div>
+        <div class="course-row">
+          <span class="cr-code">MAT201</span>
+          <span class="cr-name">Discrete Mathematics</span>
+          <span class="cr-grade warn">C</span>
+        </div>
+      </div>
+      <div class="ad-actions">
+        <button class="ad-btn adbtn-primary" onclick="alert('Alert sent to student via email + WhatsApp!')">Send alert</button>
+        <button class="ad-btn adbtn-ghost" onclick="alert('Counselling note added to audit trail.')">Add note</button>
+        <button class="ad-btn adbtn-ghost" onclick="alert('Student marked as reviewed in audit trail.')">Mark reviewed</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RESEARCH -->
+<section id="research">
+  <div class="section-tag">Research findings</div>
+  <h2 class="section-title">Five research questions,<br>five clear answers</h2>
+  <p class="section-sub">Based on real authenticated DIU student data collected over 1.5 years. Target: Q1 journal publication.</p>
+
+  <div class="research-grid">
+    <div class="research-card">
+      <div class="rc-phase">Phase 1 · PCA Analysis</div>
+      <div class="rc-title">Does PCA structure stay stable across dataset sizes?</div>
+      <div class="rc-desc">PCA was applied across N=2k, 5k, and 10k synthetic datasets generated from real student survey data. Cumulative variance and component loadings were compared.</div>
+      <div class="rc-finding">25–26 components needed for 90% variance — <span>stable across all N sizes</span>. Synthetic data is valid.</div>
+    </div>
+    <div class="research-card">
+      <div class="rc-phase">Phase 2 · Automation Need</div>
+      <div class="rc-title">At what scale does manual supervision break down?</div>
+      <div class="rc-desc">Manual workload modelled as N grows. Each at-risk student requires 15 minutes of supervisor review time with a 120hr/month capacity per supervisor.</div>
+      <div class="rc-finding">Manual system exceeds capacity at <span>N &gt; 2,000</span>. More than <span>17 supervisors</span> required. Automation is necessary.</div>
+    </div>
+    <div class="research-card">
+      <div class="rc-phase">Phase 3 · Agentic vs Manual</div>
+      <div class="rc-title">How does the agentic system compare to manual review?</div>
+      <div class="rc-desc">Manual supervisor simulated at 75% accuracy (realistic human performance). Agentic AI starts at 46.7% overall accuracy but achieves 69.6% recall on at-risk students.</div>
+      <div class="rc-finding">At-risk recall: <span>+27.1% improvement</span>. 115 extra students helped per 1,000 monitored. Recall, not accuracy, is the right metric.</div>
+    </div>
+    <div class="research-card">
+      <div class="rc-phase">Phase 4 · Student Benefit</div>
+      <div class="rc-title">How many more students receive timely help?</div>
+      <div class="rc-desc">Truly at-risk students (Very Low + Low classification) compared between manual detection rate and agentic detection rate across the test set of 1,000 students.</div>
+      <div class="rc-finding">At institution scale (N=10k): <span>~1,150 extra students</span> receive timely intervention per semester.</div>
+    </div>
+    <div class="research-card">
+      <div class="rc-phase">Phase 5 · Authority Engagement</div>
+      <div class="rc-title">How does authority stay engaged without being overwhelmed?</div>
+      <div class="rc-desc">Alert classification routes only actionable cases to the teacher. Full audit trail maintained for every prediction, review, and automated action.</div>
+      <div class="rc-finding">Only <span>41% require human review</span>. 59% auto-resolved. Complete audit trail with 1,000 logged records.</div>
+    </div>
+    <div class="research-card">
+      <div class="rc-phase">Main Contribution · Longitudinal</div>
+      <div class="rc-title">How does the model improve semester by semester?</div>
+      <div class="rc-desc">The core research finding: tracking model accuracy across semesters as cumulative training data grows. Starting point 46.7% is the beginning, not the conclusion.</div>
+      <div class="rc-finding">Accuracy trajectory: <span>46.7% → 52% → 60% → 67%</span> converging toward faculty baseline of 75%.</div>
+    </div>
+  </div>
+</section>
+
+<!-- TECH STACK -->
+<section class="tech-section" id="tech">
+  <div class="section-tag">Tech stack</div>
+  <h2 class="section-title">Built for deployment,<br>not just research</h2>
+  <p class="section-sub">Production-grade architecture designed to run in the DIU environment, with full containerisation and automated workflows.</p>
+
+  <div class="tech-grid">
+    <div class="tech-layer">
+      <div class="tl-label">Frontend</div>
+      <div class="tl-name">Dashboard UI</div>
+      <div class="tl-tech">React 18 + Tailwind CSS</div>
+      <div class="tl-desc">Teacher dashboard, student detail views, learning curve chart, alert system, CSV upload interface.</div>
+      <div class="api-endpoint">Recharts · React Query</div>
+    </div>
+    <div class="tech-layer">
+      <div class="tl-label">Backend</div>
+      <div class="tl-name">API Server</div>
+      <div class="tl-tech">FastAPI + Python 3.11</div>
+      <div class="tl-desc">REST API serving ML predictions, DIU API integration, model retraining, and notification triggers.</div>
+      <div class="api-endpoint">POST /api/predict</div>
+    </div>
+    <div class="tech-layer">
+      <div class="tl-label">ML Model</div>
+      <div class="tl-name">Risk Classifier</div>
+      <div class="tl-tech">scikit-learn · joblib</div>
+      <div class="tl-desc">PCA(n=20) + LinearSVC pipeline. Trained on 29 Likert survey questions. Retrained each semester with accumulated data.</div>
+      <div class="api-endpoint">agentic_pipe_model.joblib</div>
+    </div>
+    <div class="tech-layer">
+      <div class="tl-label">Infrastructure</div>
+      <div class="tl-name">Data & Tasks</div>
+      <div class="tl-tech">PostgreSQL · Celery · Redis</div>
+      <div class="tl-desc">Student records, predictions, model versions, audit trail. Background tasks for retraining and DIU API sync.</div>
+      <div class="api-endpoint">Docker Compose</div>
+    </div>
+  </div>
+
+  <div style="margin-top:3rem;display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.06);border-radius:6px;overflow:hidden;">
+    <div style="padding:1.5rem;background:rgba(255,255,255,0.02);">
+      <div style="font-size:0.62rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.25);margin-bottom:0.75rem;">Notification</div>
+      <div style="font-size:0.85rem;font-weight:600;color:rgba(255,255,255,0.8);margin-bottom:0.3rem;">Email + WhatsApp</div>
+      <div style="font-size:0.75rem;color:rgba(255,255,255,0.35);">URGENT alerts to teacher in real-time. Student notifications on teacher action.</div>
+    </div>
+    <div style="padding:1.5rem;background:rgba(255,255,255,0.02);">
+      <div style="font-size:0.62rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.25);margin-bottom:0.75rem;">Authentication</div>
+      <div style="font-size:0.85rem;font-weight:600;color:rgba(255,255,255,0.8);margin-bottom:0.3rem;">JWT + DIU credentials</div>
+      <div style="font-size:0.75rem;color:rgba(255,255,255,0.35);">Secure login tied to existing DIU teacher accounts. No separate account needed.</div>
+    </div>
+    <div style="padding:1.5rem;background:rgba(255,255,255,0.02);">
+      <div style="font-size:0.62rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.25);margin-bottom:0.75rem;">Hosting</div>
+      <div style="font-size:0.85rem;font-weight:600;color:rgba(255,255,255,0.8);margin-bottom:0.3rem;">DIU Server / VPS</div>
+      <div style="font-size:0.75rem;color:rgba(255,255,255,0.35);">Docker Compose deployment. All student data stays on DIU infrastructure.</div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div>
+    <div class="footer-brand">Agent<span>Mentor</span> · DIU</div>
+    <div class="footer-meta" style="margin-top:4px;">Daffodil International University · Teacher 710003580</div>
+  </div>
+  <div class="footer-links">
+    <a href="#how">How it works</a>
+    <a href="#features">Features</a>
+    <a href="#learning">Learning curve</a>
+    <a href="#research">Research</a>
+    <a href="#tech">Tech stack</a>
+  </div>
+  <div class="footer-meta">
+    Research target: Q1 Journal<br>
+    Real data: N=2,034 · 1.5 years
+  </div>
+</footer>
+
+<script>
+// Student detail panel
+const students = {
+  jerin: {
+    avatar:'J', name:'Mst. Jerin Binta Jaman', id:'242-15-316 · Batch 57 · Section A',
+    alert:'URGENT — Very Low', alertClass:'ada-urgent',
+    cgpa:'2.0', cgpaColor:'#e06060', cgpaNote:'Below 2.5 threshold',
+    conf:'46.2%', credits:'9/19.5', creditsColor:'#d4922a', creditsNote:'Incomplete',
+    due:'200 BDT', dueColor:'#3ab88a', dueNote:'Payment clear',
+    courses:[
+      {code:'CSE123',name:'Data Structure',grade:'C+',cls:'warn'},
+      {code:'CSE124',name:'Data Structure Lab',grade:'D',cls:'bad'},
+      {code:'MAT201',name:'Discrete Mathematics',grade:'C',cls:'warn'},
+    ]
+  },
+  iram: {
+    avatar:'S', name:'Samiul Hoque Iram', id:'242-15-323 · Batch 57 · Section B',
+    alert:'URGENT — Very Low', alertClass:'ada-urgent',
+    cgpa:'2.48', cgpaColor:'#d4922a', cgpaNote:'Risk zone',
+    conf:'52.1%', credits:'16.5/34.5', creditsColor:'#d4922a', creditsNote:'Incomplete',
+    due:'43,767 BDT', dueColor:'#e06060', dueNote:'High due',
+    courses:[
+      {code:'CSE211',name:'Algorithms',grade:'D',cls:'bad'},
+      {code:'CSE212',name:'Algorithms Lab',grade:'C',cls:'warn'},
+      {code:'ENG201',name:'English',grade:'B-',cls:'good'},
+    ]
+  },
+  deepto: {
+    avatar:'R', name:'Md. Rashed Al Deepto', id:'242-15-337 · Batch 57 · Section C',
+    alert:'WATCH — Low', alertClass:'',
+    cgpa:'0.0', cgpaColor:'#e06060', cgpaNote:'No completed courses',
+    conf:'44.8%', credits:'0/31.5', creditsColor:'#e06060', creditsNote:'No credits completed',
+    due:'31,380 BDT', dueColor:'#e06060', dueNote:'High due',
+    courses:[
+      {code:'CSE101',name:'Intro to CS',grade:'I',cls:'bad'},
+      {code:'MAT101',name:'Mathematics I',grade:'I',cls:'bad'},
+    ]
+  },
+  sami: {
+    avatar:'S', name:'Md. Sami', id:'242-15-358 · Batch 57 · Section A',
+    alert:'WATCH — Low', alertClass:'',
+    cgpa:'2.33', cgpaColor:'#d4922a', cgpaNote:'Below 2.5',
+    conf:'41.3%', credits:'52.5/64.5', creditsColor:'#d4922a', creditsNote:'Incomplete',
+    due:'0 BDT', dueColor:'#3ab88a', dueNote:'Payment clear',
+    courses:[
+      {code:'CSE301',name:'Database Systems',grade:'C+',cls:'warn'},
+      {code:'CSE302',name:'Database Lab',grade:'B-',cls:'good'},
+      {code:'CSE303',name:'Software Engineering',grade:'D',cls:'bad'},
+    ]
+  },
+  mona: {
+    avatar:'N', name:'Nusrat Jahan Mona', id:'242-15-317 · Batch 57 · Section B',
+    alert:'Normal — Medium', alertClass:'',
+    cgpa:'3.34', cgpaColor:'#3ab88a', cgpaNote:'Good standing',
+    conf:'67.3%', credits:'64.5/64.5', creditsColor:'#3ab88a', creditsNote:'Complete',
+    due:'32,025 BDT', dueColor:'#d4922a', dueNote:'Due pending',
+    courses:[
+      {code:'CSE123',name:'Data Structure',grade:'A',cls:'good'},
+      {code:'CSE124',name:'Data Structure Lab',grade:'B+',cls:'good'},
+      {code:'MAT201',name:'Discrete Mathematics',grade:'A-',cls:'good'},
+    ]
+  },
+  tanjimul: {
+    avatar:'T', name:'Md. Tanjimul Islam', id:'242-15-330 · Batch 57 · Section A',
+    alert:'Normal — High', alertClass:'',
+    cgpa:'3.88', cgpaColor:'#3ab88a', cgpaNote:'Excellent',
+    conf:'78.4%', credits:'64.5/64.5', creditsColor:'#3ab88a', creditsNote:'Complete',
+    due:'32,025 BDT', dueColor:'#d4922a', dueNote:'Due pending',
+    courses:[
+      {code:'CSE123',name:'Data Structure',grade:'A+',cls:'good'},
+      {code:'CSE124',name:'Data Structure Lab',grade:'A',cls:'good'},
+      {code:'MAT201',name:'Discrete Mathematics',grade:'A+',cls:'good'},
+    ]
+  }
+};
+
+function showStudent(key) {
+  const s = students[key];
+  if (!s) return;
+  const alertStyle = s.cgpa < 2.5 ? 'ada-urgent' : '';
+  const alertBg = s.alert.includes('URGENT') ? 'background:rgba(184,50,50,0.25);color:#e06060;' :
+                  s.alert.includes('WATCH')   ? 'background:rgba(196,122,30,0.25);color:#d4922a;' :
+                  'background:rgba(10,110,86,0.25);color:#3ab88a;';
+  document.getElementById('student-detail').innerHTML = `
+    <div class="ad-header">
+      <div class="ad-avatar">${s.avatar}</div>
+      <div>
+        <div class="ad-name">${s.name}</div>
+        <div class="ad-id">${s.id}</div>
+        <span class="ad-alert" style="${alertBg}">${s.alert}</span>
+      </div>
+    </div>
+    <div class="ad-metrics">
+      <div class="ad-metric">
+        <div class="adm-label">CGPA</div>
+        <div class="adm-val" style="color:${s.cgpaColor};">${s.cgpa}</div>
+        <div class="adm-sub">${s.cgpaNote}</div>
+      </div>
+      <div class="ad-metric">
+        <div class="adm-label">AI Confidence</div>
+        <div class="adm-val">${s.conf}</div>
+        <div class="adm-sub">Model v4 · Summer 2025</div>
+      </div>
+      <div class="ad-metric">
+        <div class="adm-label">Credits</div>
+        <div class="adm-val" style="color:${s.creditsColor};">${s.credits}</div>
+        <div class="adm-sub">${s.creditsNote}</div>
+      </div>
+      <div class="ad-metric">
+        <div class="adm-label">Due Amount</div>
+        <div class="adm-val" style="color:${s.dueColor};">${s.due}</div>
+        <div class="adm-sub">${s.dueNote}</div>
+      </div>
+    </div>
+    <div class="ad-courses">
+      <div class="ad-courses-title">Latest semester courses</div>
+      ${s.courses.map(c=>`
+        <div class="course-row">
+          <span class="cr-code">${c.code}</span>
+          <span class="cr-name">${c.name}</span>
+          <span class="cr-grade ${c.cls}">${c.grade}</span>
+        </div>`).join('')}
+    </div>
+    <div class="ad-actions">
+      <button class="ad-btn adbtn-primary" onclick="alert('Alert sent to ${s.name} via email + WhatsApp!')">Send alert</button>
+      <button class="ad-btn adbtn-ghost" onclick="alert('Counselling note saved to audit trail.')">Add note</button>
+      <button class="ad-btn adbtn-ghost" onclick="alert('${s.name} marked as reviewed.')">Mark reviewed</button>
+    </div>
+  `;
+}
+
+// Smooth scroll
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    e.preventDefault();
+    const t = document.querySelector(a.getAttribute('href'));
+    if (t) t.scrollIntoView({behavior:'smooth'});
+  });
+});
+
+// Scroll-triggered fade
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(el => {
+    if (el.isIntersecting) {
+      el.target.style.opacity = '1';
+      el.target.style.transform = 'translateY(0)';
+    }
+  });
+}, {threshold:0.1});
+
+document.querySelectorAll('.research-card,.feature-card,.step,.tech-layer').forEach(el => {
+  el.style.opacity = '0';
+  el.style.transform = 'translateY(20px)';
+  el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+  obs.observe(el);
+});
+</script>
+</body>
+</html>
