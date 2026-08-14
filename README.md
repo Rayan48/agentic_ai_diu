@@ -1,6 +1,5 @@
 ---
 title: AgentMentor DIU
-emoji: 🤖
 colorFrom: blue
 colorTo: green
 sdk: gradio
