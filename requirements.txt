@@ -1,0 +1,6 @@
+groq
+gradio
+scikit-learn
+pandas
+openpyxl
+numpy
